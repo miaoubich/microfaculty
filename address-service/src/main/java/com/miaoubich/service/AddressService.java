@@ -34,7 +34,7 @@ public class AddressService {
 		return addressRepository.saveAll(addresses);
 	}
 
-	public AddressResponse getStudentById(Long addressId) {
+	public AddressResponse getAddressById(Long addressId) {
 		return new AddressResponse(addressRepository.getById(addressId));
 	}
 

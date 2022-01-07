@@ -38,7 +38,7 @@ public class AddressController {
 
 	@GetMapping("/{addressId}")
 	public AddressResponse printSingleAddress(@PathVariable Long addressId) {
-		return addressService.getStudentById(addressId);
+		return addressService.getAddressById(addressId);
 	}
 
 	@GetMapping("/getList")
@@ -48,7 +48,7 @@ public class AddressController {
 
 	@PutMapping("/update")
 	public ResponseEntity<Address> updateAddress(@RequestBody Address address) {
-		return new ResponseEntity<Address>(addressService.EditAddress(address), HttpStatus.CREATED);
+		return new ResponseEntity<Address>(addressService.EditAddress(address), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/{addressId}")
