@@ -1,7 +1,6 @@
 package com.miaoubich.response;
 
 import com.miaoubich.entity.Student;
-import com.miaoubich.service.AddressResponse;
 
 public class StudentResponse {
 

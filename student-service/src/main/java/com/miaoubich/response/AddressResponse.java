@@ -1,4 +1,4 @@
-package com.miaoubich.service;
+package com.miaoubich.response;
 
 public class AddressResponse {
 

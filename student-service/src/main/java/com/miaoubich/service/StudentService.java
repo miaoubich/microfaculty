@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.miaoubich.entity.Student;
+import com.miaoubich.feignclients.AddressFeignClient;
 import com.miaoubich.repository.StudentRepository;
 import com.miaoubich.request.CreateStudentRequest;
+import com.miaoubich.response.AddressResponse;
 import com.miaoubich.response.StudentResponse;
 
 import reactor.core.publisher.Mono;
@@ -20,6 +22,8 @@ public class StudentService {
 	private StudentRepository studentRepository;
 	@Autowired
 	private WebClient webClient;
+	@Autowired
+	private AddressFeignClient addressFeignClient;
 
 	public StudentResponse addstudent(CreateStudentRequest createStudentRequest) {
 
@@ -33,7 +37,9 @@ public class StudentService {
 
 		StudentResponse studentResponse = new StudentResponse(student);
 
-		studentResponse.setAddressResponse(getAddressById(student.getAddressId()));
+		// studentResponse.setAddressResponse(getAddressById(student.getAddressId()));
+		// or we use feignClient
+		studentResponse.setAddressResponse(addressFeignClient.printSingleAddress(student.getAddressId()));
 
 		return studentResponse;
 	}
@@ -46,7 +52,9 @@ public class StudentService {
 		Student student = studentRepository.findById(studentId).get();
 		StudentResponse studentResponse = new StudentResponse(student);
 
-		studentResponse.setAddressResponse(getAddressById(student.getAddressId()));
+//		studentResponse.setAddressResponse(getAddressById(student.getAddressId()));
+		//or we use feignClient
+		studentResponse.setAddressResponse(addressFeignClient.printSingleAddress(student.getAddressId()));
 
 		return studentResponse;
 	}
@@ -63,7 +71,13 @@ public class StudentService {
 		existStudent.setEmail(student.getEmail());
 		existStudent.setAddressId(student.getAddressId());
 
+		studentRepository.save(existStudent);
+
 		return studentRepository.save(existStudent);
+
+		//To return a studentResponse we do 
+//		StudentResponse studentResponse = new StudentResponse(student);
+//		return studentResponse;
 	}
 
 	public void deleteStudent(Long studentId) {
