@@ -34,7 +34,7 @@ public class StudentController {
 	@PostMapping("/addList")
 	public ResponseEntity<String> addStudents(@RequestBody List<Student> students) {
 		studentService.addStudentList(students);
-		return new ResponseEntity<String>("Student list data stored successfully.", HttpStatus.CREATED);
+		return new ResponseEntity<String>("Students data stored successfully.", HttpStatus.CREATED);
 	}
 
 	@GetMapping("/{studentId}")
