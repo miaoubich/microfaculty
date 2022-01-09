@@ -19,8 +19,11 @@ import com.miaoubich.request.CreateStudentRequest;
 import com.miaoubich.response.StudentResponse;
 import com.miaoubich.service.StudentService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/api/student")
+@Slf4j
 public class StudentController {
 
 	@Autowired
@@ -28,6 +31,7 @@ public class StudentController {
 
 	@PostMapping("/add")
 	public StudentResponse createStudent(@RequestBody CreateStudentRequest studentRequest) {
+		log.info("Student saved!");
 		return studentService.addstudent(studentRequest);
 	}
 
@@ -38,7 +42,7 @@ public class StudentController {
 	}
 
 	@GetMapping("/{studentId}")
-	public StudentResponse printSingleStudent(@PathVariable Long studentId) {
+	public StudentResponse printSingleStudent(@PathVariable Long studentId) {//(@PathVariable("studentId") Long studentId)
 		return studentService.getStudentById(studentId);
 	}
 
@@ -46,7 +50,7 @@ public class StudentController {
 	public ResponseEntity<List<Student>> getAllStudents() {
 		return new ResponseEntity<List<Student>>(studentService.getStudents(), HttpStatus.FOUND);
 	}
-
+	
 	@PutMapping("/update")
 	public ResponseEntity<Student> updateAddress(@RequestBody Student student) {
 		return new ResponseEntity<Student>(studentService.EditAddress(student), HttpStatus.OK);

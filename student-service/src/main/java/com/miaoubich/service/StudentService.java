@@ -53,7 +53,7 @@ public class StudentService {
 		StudentResponse studentResponse = new StudentResponse(student);
 
 //		studentResponse.setAddressResponse(getAddressById(student.getAddressId()));
-		//or we use feignClient
+		// or we use feignClient
 		studentResponse.setAddressResponse(addressFeignClient.printSingleAddress(student.getAddressId()));
 
 		return studentResponse;
@@ -75,7 +75,7 @@ public class StudentService {
 
 		return studentRepository.save(existStudent);
 
-		//To return a studentResponse we do 
+		// To return a studentResponse we do
 //		StudentResponse studentResponse = new StudentResponse(student);
 //		return studentResponse;
 	}
@@ -84,6 +84,7 @@ public class StudentService {
 		studentRepository.deleteById(studentId);
 	}
 
+	// Get Address using WebClient
 	public AddressResponse getAddressById(long addressId) {
 		Mono<AddressResponse> address = webClient.get().uri("/" + addressId).retrieve()
 				.bodyToMono(AddressResponse.class);

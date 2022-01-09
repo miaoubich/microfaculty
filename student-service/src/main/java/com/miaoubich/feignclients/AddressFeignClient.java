@@ -13,4 +13,5 @@ public interface AddressFeignClient {
 
 	@GetMapping("/{addressId}")
 	public AddressResponse printSingleAddress(@PathVariable Long addressId);
+	
 }
