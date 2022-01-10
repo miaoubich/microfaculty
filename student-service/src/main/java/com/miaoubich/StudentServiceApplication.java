@@ -15,7 +15,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @ComponentScan({ "com.miaoubich.controller", "com.miaoubich.service" })
 @EntityScan("com.miaoubich.entity")
 @EnableJpaRepositories("com.miaoubich.repository")
-@EnableFeignClients("com.miaoubich.feignclients")
+@EnableFeignClients("com.miaoubich.config")
 @EnableEurekaClient
 public class StudentServiceApplication {
 
