@@ -28,7 +28,7 @@ public class StudentServiceApplication {
 
 	@Bean
 	public WebClient webClient() {// be sure to import org.springframework.web.reactive.function.client.WebClient
-		WebClient webClient = WebClient.builder().baseUrl(addressServiceUrl).build();
+		WebClient webClient = WebClient.builder().baseUrl(addressServiceUrl + "/api/address").build();
 		return webClient;
 	}
 

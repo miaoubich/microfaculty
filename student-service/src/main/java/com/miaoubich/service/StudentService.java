@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.miaoubich.config.AddressFeignClient;
 import com.miaoubich.entity.Student;
-import com.miaoubich.feignclients.AddressFeignClient;
 import com.miaoubich.repository.StudentRepository;
 import com.miaoubich.request.CreateStudentRequest;
 import com.miaoubich.response.AddressResponse;
@@ -36,7 +36,8 @@ public class StudentService {
 		student = studentRepository.save(student);
 
 		StudentResponse studentResponse = new StudentResponse(student);
-
+		
+		//by using WebClient we use the defined bellow method getAddressById
 		// studentResponse.setAddressResponse(getAddressById(student.getAddressId()));
 		// or we use feignClient
 		studentResponse.setAddressResponse(addressFeignClient.printSingleAddress(student.getAddressId()));

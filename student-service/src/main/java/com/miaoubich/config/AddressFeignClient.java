@@ -1,4 +1,4 @@
-package com.miaoubich.feignclients;
+package com.miaoubich.config;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +11,7 @@ import com.miaoubich.response.AddressResponse;
 //Before registering the Address microservice with eureka we use its url
 //@FeignClient(url = "${address.service.url}", value = "address-feign", path="/api/address") 
 //After registering Address microservice with eurka we use its name as a value
+
 @FeignClient(value = "address-service", path="/api/address") 
 public interface AddressFeignClient {
 
