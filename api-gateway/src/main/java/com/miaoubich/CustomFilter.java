@@ -22,7 +22,7 @@ public class CustomFilter implements GlobalFilter{
 		ServerHttpRequest request = exchange.getRequest();
 		
 		//if we want to deal with a specific service, for example we want to target only student service
-		if(request.getURI().toString().contains("/api/student/)"){
+		if(request.getURI().toString().contains("/api/student/")){
 			//write your code here
 		}
 		
