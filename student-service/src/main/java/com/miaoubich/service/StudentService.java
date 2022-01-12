@@ -38,7 +38,7 @@ public class StudentService {
 		StudentResponse studentResponse = new StudentResponse(student);
 		
 		//by using WebClient we use the defined bellow method getAddressById
-		// studentResponse.setAddressResponse(getAddressById(student.getAddressId()));
+		/* studentResponse.setAddressResponse(getAddressById(student.getAddressId()));*/
 		// or we use feignClient
 		studentResponse.setAddressResponse(addressFeignClient.printSingleAddress(student.getAddressId()));
 
