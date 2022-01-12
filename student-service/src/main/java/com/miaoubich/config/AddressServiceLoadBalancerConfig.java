@@ -1,3 +1,10 @@
+/*
+ * Since we are using fiegn client with api gateway where api-gateway is doing the loadBalancer
+ * then we don't need this loadBalancer class
+ * */
+
+
+/*
 package com.miaoubich.config;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -15,3 +22,4 @@ public class AddressServiceLoadBalancerConfig {
 		return Feign.builder();
 	}
 }
+*/
