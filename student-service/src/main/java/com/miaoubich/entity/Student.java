@@ -67,6 +67,4 @@ public class Student {
 	public void setAddressId(Long addressId) {
 		this.addressId = addressId;
 	}
-
-	
 }

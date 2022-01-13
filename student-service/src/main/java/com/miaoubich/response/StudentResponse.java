@@ -58,4 +58,10 @@ public class StudentResponse {
 		this.addressResponse = addressResponse;
 	}
 
+	@Override
+	public String toString() {
+		return "StudentResponse [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", addressResponse=" + addressResponse + "]";
+	}
+
 }

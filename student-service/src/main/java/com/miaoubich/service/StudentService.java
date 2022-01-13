@@ -4,26 +4,26 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
-import com.miaoubich.config.AddressFeignClient;
 import com.miaoubich.entity.Student;
 import com.miaoubich.repository.StudentRepository;
 import com.miaoubich.request.CreateStudentRequest;
-import com.miaoubich.response.AddressResponse;
 import com.miaoubich.response.StudentResponse;
-
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @Service
 public class StudentService {
 
 	@Autowired
 	private StudentRepository studentRepository;
+	
+//	@Autowired
+//	private WebClient webClient;
+	
+//	@Autowired
+//	private AddressFeignClient addressFeignClient;
+	
 	@Autowired
-	private WebClient webClient;
-	@Autowired
-	private AddressFeignClient addressFeignClient;
+	private CommonService commonService;
 
 	public StudentResponse addstudent(CreateStudentRequest createStudentRequest) {
 
@@ -42,7 +42,7 @@ public class StudentService {
 		 * studentResponse.setAddressResponse(getAddressById(student.getAddressId()));
 		 */
 		// or we use feignClient
-		studentResponse.setAddressResponse(getAddressById(student.getAddressId()));
+		studentResponse.setAddressResponse(commonService.getAddressById(student.getAddressId()));
 
 		return studentResponse;
 	}
@@ -57,7 +57,7 @@ public class StudentService {
 
 //		studentResponse.setAddressResponse(getAddressById(student.getAddressId()));
 		// or we use feignClient
-		studentResponse.setAddressResponse(getAddressById(student.getAddressId()));
+		studentResponse.setAddressResponse(commonService.getAddressById(student.getAddressId()));
 
 		return studentResponse;
 	}
@@ -96,20 +96,20 @@ public class StudentService {
 	 * return address.block(); }
 	 */
 
-	/*
-	 * Because in this method only we are making a call to the address service then
-	 * we'll apply the circuit breaker here
-	 */
-	@CircuitBreaker(name = "addressService", // addressService: is the name we provide for the circuit breaker instance
-												// in application.properties
-			fallbackMethod = "fallbackToGetSingleAddressById")
-	public AddressResponse getAddressById(long addressId) {
-		AddressResponse addressResponse = addressFeignClient.printSingleAddress(addressId);
-		return addressResponse;
-	}
-
-	//the callback method should have the same signature as the one annotated with @CircuitBreaker
-	public AddressResponse fallbackToGetSingleAddressById(long addressId, Throwable e) {// Throwable is optional
-		return new AddressResponse(); //this is a dummy response
-	}
+//	/*
+//	 * Because in this method only we are making a call to the address service then
+//	 * we'll apply the circuit breaker here
+//	 */
+//	@CircuitBreaker(name = "addressService", // addressService: is the name we provide for the circuit breaker instance
+//												// in application.properties
+//			fallbackMethod = "fallbackToGetSingleAddressById")
+//	public AddressResponse getAddressById(long addressId) {
+//		AddressResponse addressResponse = addressFeignClient.printSingleAddress(addressId);
+//		return addressResponse;
+//	}
+//
+//	//the callback method should have the same signature as the one annotated with @CircuitBreaker
+//	public AddressResponse fallbackToGetSingleAddressById(long addressId, Throwable e) {// Throwable is optional
+//		return new AddressResponse(); //this is a dummy response
+//	}
 }
