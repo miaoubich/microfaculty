@@ -22,7 +22,7 @@ public class CommonService {
 	 * Because in this method only we are making a call to the address service then
 	 * we'll apply the circuit breaker here
 	 */
-	@CircuitBreaker(name = "addressService", // addressService: is the name we provide for the circuit breaker instances
+	@CircuitBreaker(name = "addressService", // addressService: is the name we provide for the circuitBreaker instances
 												// in application.properties
 			fallbackMethod = "fallbackToGetSingleAddressById")
 	public AddressResponse getAddressById(long addressId) {

@@ -2,6 +2,8 @@ package com.miaoubich.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import com.miaoubich.response.StudentResponse;
 @Service
 public class StudentService {
 
+	private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 	@Autowired
 	private StudentRepository studentRepository;
 	
@@ -52,6 +55,10 @@ public class StudentService {
 	}
 
 	public StudentResponse getStudentById(long studentId) {
+		
+		//for testing purpose
+		logger.info("This log is comming from getStudentById(studentId) method.");
+		
 		Student student = studentRepository.findById(studentId).get();
 		StudentResponse studentResponse = new StudentResponse(student);
 
