@@ -3,6 +3,8 @@ package com.miaoubich.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,10 +23,15 @@ import com.miaoubich.service.AddressService;
 
 @RestController
 @RequestMapping("/api/address")
+@RefreshScope //allow us to read the test value in case it's been changed in address-service-dev.properties
 public class AddressController {
 
 	@Autowired
 	private AddressService addressService;
+	
+	@Value("${address.test}")
+	private String test;
+	
 
 	@PostMapping("/add")
 	public AddressResponse createAddress(@RequestBody CreateAddressRequest addressRequest) {
@@ -56,5 +63,10 @@ public class AddressController {
 		addressService.deleteAddress(addressId);
 
 		return ResponseEntity.ok("Address successfully deleted!");
+	}
+	
+	@GetMapping("/test")
+	public String test() {
+		return test;
 	}
 }
