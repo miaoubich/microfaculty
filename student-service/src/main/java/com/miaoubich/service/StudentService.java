@@ -28,7 +28,7 @@ public class StudentService {
 	@Autowired
 	private CommonService commonService;
 
-	public StudentResponse addstudent(CreateStudentRequest createStudentRequest) {
+	public StudentResponse addStudent(CreateStudentRequest createStudentRequest) {
 
 		Student student = new Student();
 		student.setFirstname(createStudentRequest.getFirstname());
@@ -70,6 +70,8 @@ public class StudentService {
 	}
 
 	public List<Student> getStudents() {
+		logger.info("From student Service.");
+		
 		return studentRepository.findAll();
 	}
 
