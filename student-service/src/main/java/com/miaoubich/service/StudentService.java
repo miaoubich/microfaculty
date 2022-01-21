@@ -1,15 +1,18 @@
 package com.miaoubich.service;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.miaoubich.entity.Student;
 import com.miaoubich.repository.StudentRepository;
 import com.miaoubich.request.CreateStudentRequest;
+import com.miaoubich.response.CustomResponseMessage;
 import com.miaoubich.response.StudentResponse;
 
 @Service
@@ -18,17 +21,17 @@ public class StudentService {
 	private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 	@Autowired
 	private StudentRepository studentRepository;
-	
+
 //	@Autowired
 //	private WebClient webClient;
-	
+
 //	@Autowired
 //	private AddressFeignClient addressFeignClient;
-	
+
 	@Autowired
 	private CommonService commonService;
 
-	public StudentResponse addStudent(CreateStudentRequest createStudentRequest) {
+	public CustomResponseMessage addStudent(CreateStudentRequest createStudentRequest) {
 
 		Student student = new Student();
 		student.setFirstname(createStudentRequest.getFirstname());
@@ -47,7 +50,12 @@ public class StudentService {
 		// or we use feignClient
 		studentResponse.setAddressResponse(commonService.getAddressById(student.getAddressId()));
 
-		return studentResponse;
+//		return studentResponse;
+
+		CustomResponseMessage message = new CustomResponseMessage();
+		message.setResponse("Student added successfully!");
+
+		return message;
 	}
 
 	public void addStudentList(List<Student> students) {
@@ -55,10 +63,10 @@ public class StudentService {
 	}
 
 	public StudentResponse getStudentById(long studentId) {
-		
-		//for testing purpose
+
+		// for testing purpose
 		logger.info("This log is comming from getStudentById(studentId) method.");
-		
+
 		Student student = studentRepository.findById(studentId).get();
 		StudentResponse studentResponse = new StudentResponse(student);
 
@@ -71,29 +79,34 @@ public class StudentService {
 
 	public List<Student> getStudents() {
 		logger.info("From student Service.");
-		
+
 		return studentRepository.findAll();
 	}
 
-	public Student EditAddress(Student student) {
-		Student existStudent = studentRepository.getById(student.getId());
+	public Student EditStudent(Student student) {
+		Student existStudent = studentRepository.findById(student.getId()).get();
 
 		existStudent.setFirstname(student.getFirstname());
 		existStudent.setLastname(student.getLastname());
 		existStudent.setEmail(student.getEmail());
 		existStudent.setAddressId(student.getAddressId());
 
-		studentRepository.save(existStudent);
-
 		return studentRepository.save(existStudent);
 
-		// To return a studentResponse we do
-//		StudentResponse studentResponse = new StudentResponse(student);
-//		return studentResponse;
+		// To return a studentResponse we do 
+		  
+		/*
+		 * studentRepository.save(existStudent); 
+		 * StudentResponse studentResponse = new StudentResponse(existStudent); 
+		 * return studentResponse;
+		 */
+		 
 	}
 
-	public void deleteStudent(Long studentId) {
+	public ResponseEntity<String> deleteStudent(long studentId) {
 		studentRepository.deleteById(studentId);
+		
+		return ResponseEntity.ok("Student successfully deleted!");
 	}
 
 	// Get Address using WebClient
